@@ -33,9 +33,13 @@ public class ConsoleTest extends JReadlineTestCase {
 
     public void testSimpleRedirectionCommands() throws IOException {
         TestBuffer buffer = new TestBuffer("ls . | find\n");
+<<<<<<< HEAD
         if (Config.isOSPOSIXCompatible()) {
             assertEquals("ls .  find", buffer);
         }
+=======
+        assertEquals("ls .  find", buffer);
+>>>>>>> e482a2f12b2a252d96d6b0b5de4625705ed22a7b
     }
 
     public void testRedirectionCommands() throws IOException {
@@ -43,6 +47,7 @@ public class ConsoleTest extends JReadlineTestCase {
         PipedOutputStream outputStream = new PipedOutputStream();
         PipedInputStream pipedInputStream = new PipedInputStream(outputStream);
 
+<<<<<<< HEAD
         if (Config.isOSPOSIXCompatible()) {
             Console console = getTestConsole(pipedInputStream);
             outputStream.write("ls | find *. -print\n".getBytes());
@@ -51,6 +56,16 @@ public class ConsoleTest extends JReadlineTestCase {
             output = console.read(null);
             assertEquals(" find *. -print", output.getBuffer());
 
+=======
+        Console console = getTestConsole(pipedInputStream);
+        outputStream.write("ls | find *. -print\n".getBytes());
+        ConsoleOutput output = console.read(null);
+        assertEquals("ls ", output.getBuffer());
+        output = console.read(null);
+        assertEquals(" find *. -print", output.getBuffer());
+
+        if(Config.isOSPOSIXCompatible()) {
+>>>>>>> e482a2f12b2a252d96d6b0b5de4625705ed22a7b
             outputStream.write("ls >/tmp/foo\\ bar.txt\n".getBytes());
             output = console.read(null);
             assertEquals("ls ", output.getBuffer());
@@ -68,7 +83,11 @@ public class ConsoleTest extends JReadlineTestCase {
         PipedOutputStream outputStream = new PipedOutputStream();
         PipedInputStream pipedInputStream = new PipedInputStream(outputStream);
 
+<<<<<<< HEAD
         if (Config.isOSPOSIXCompatible()) {
+=======
+        if(Config.isOSPOSIXCompatible()) {
+>>>>>>> e482a2f12b2a252d96d6b0b5de4625705ed22a7b
             Console console = getTestConsole(pipedInputStream);
             outputStream.write("ls < /tmp/foo\\ bar.txt | man\n".getBytes());
             ConsoleOutput output = console.read(null);
@@ -87,7 +106,12 @@ public class ConsoleTest extends JReadlineTestCase {
         PipedOutputStream outputStream = new PipedOutputStream();
         PipedInputStream pipedInputStream = new PipedInputStream(outputStream);
 
+<<<<<<< HEAD
         if (Config.isOSPOSIXCompatible()) {
+=======
+
+        if(Config.isOSPOSIXCompatible()) {
+>>>>>>> e482a2f12b2a252d96d6b0b5de4625705ed22a7b
             Console console = getTestConsole(pipedInputStream);
             outputStream.write("ll\n".getBytes());
             ConsoleOutput output = console.read(null);
@@ -100,6 +124,10 @@ public class ConsoleTest extends JReadlineTestCase {
         }
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> e482a2f12b2a252d96d6b0b5de4625705ed22a7b
     private Console getTestConsole(InputStream is) throws IOException {
         Settings settings = Settings.getInstance();
         settings.setAliasFile(new File("src/test/resources/alias1"));
@@ -110,7 +138,11 @@ public class ConsoleTest extends JReadlineTestCase {
         settings.setEditMode(Mode.EMACS);
         settings.resetEditMode();
         settings.setReadAhead(false);
+<<<<<<< HEAD
         if (!Config.isOSPOSIXCompatible())
+=======
+        if(!Config.isOSPOSIXCompatible())
+>>>>>>> e482a2f12b2a252d96d6b0b5de4625705ed22a7b
             settings.setAnsiConsole(false);
 
         return new Console(settings);
@@ -129,7 +161,12 @@ public class ConsoleTest extends JReadlineTestCase {
             }
             return sb.toString();
 
+<<<<<<< HEAD
         } finally {
+=======
+        }
+        finally {
+>>>>>>> e482a2f12b2a252d96d6b0b5de4625705ed22a7b
             br.close();
         }
     }

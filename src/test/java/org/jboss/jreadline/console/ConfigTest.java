@@ -8,7 +8,14 @@ package org.jboss.jreadline.console;
 
 import junit.framework.TestCase;
 import org.jboss.jreadline.console.settings.Settings;
+<<<<<<< HEAD
 import org.jboss.jreadline.edit.Mode;
+=======
+import org.jboss.jreadline.edit.KeyOperation;
+import org.jboss.jreadline.edit.Mode;
+import org.jboss.jreadline.edit.actions.Operation;
+
+>>>>>>> e482a2f12b2a252d96d6b0b5de4625705ed22a7b
 import java.io.File;
 import java.io.IOException;
 
@@ -21,6 +28,10 @@ public class ConfigTest extends TestCase {
         super(name);
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> e482a2f12b2a252d96d6b0b5de4625705ed22a7b
     public void testParseInputrc() throws IOException {
         Settings settings = Settings.getInstance();
         settings.resetToDefaults();
@@ -45,6 +56,7 @@ public class ConfigTest extends TestCase {
 
         Config.parseInputrc(settings);
 
+<<<<<<< HEAD
         // assertEquals(new KeyOperation(new int[]{27,91,68}, Operation.MOVE_NEXT_CHAR),
         // settings.getOperationManager().findOperation(new int[]{27,91,68}));
 
@@ -56,6 +68,19 @@ public class ConfigTest extends TestCase {
 
         // assertEquals(new KeyOperation(new int[]{1}, Operation.MOVE_NEXT_WORD),
         // settings.getOperationManager().findOperation(new int[]{1}));
+=======
+        assertEquals(new KeyOperation(new int[]{27,91,68}, Operation.MOVE_NEXT_CHAR),
+                settings.getOperationManager().findOperation(new int[]{27,91,68}));
+
+        assertEquals(new KeyOperation(new int[]{27,91,66}, Operation.HISTORY_PREV),
+                settings.getOperationManager().findOperation(new int[]{27,91,66}));
+
+        assertEquals(new KeyOperation(new int[]{27,10}, Operation.MOVE_PREV_CHAR),
+                settings.getOperationManager().findOperation(new int[]{27,10}));
+
+        assertEquals(new KeyOperation(new int[]{1}, Operation.MOVE_NEXT_WORD),
+                settings.getOperationManager().findOperation(new int[]{1}));
+>>>>>>> e482a2f12b2a252d96d6b0b5de4625705ed22a7b
     }
 
     public void testParseProperties() throws IOException {
@@ -69,8 +94,12 @@ public class ConfigTest extends TestCase {
 
         Config.readRuntimeProperties(Settings.getInstance());
 
+<<<<<<< HEAD
         assertEquals(Settings.getInstance().getTerminal().getClass().getName(),
                 "org.jboss.jreadline.terminal.TestTerminal");
+=======
+        assertEquals(Settings.getInstance().getTerminal().getClass().getName(), "org.jboss.jreadline.terminal.TestTerminal");
+>>>>>>> e482a2f12b2a252d96d6b0b5de4625705ed22a7b
 
         assertEquals(Settings.getInstance().getEditMode(), Mode.VI);
 
