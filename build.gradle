@@ -1,0 +1,86 @@
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'maven'
+apply plugin: 'application'
+apply plugin: 'checkstyle'
+
+group = 'com.eidosmedia'
+version = '0.20.4'
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'JReadline', 'Implementation-Version': version
+    }
+}
+
+repositories {
+    maven {
+    	url 'http://eidos01maven:8080/nexus/content/groups/public' 
+    }
+}
+
+artifacts {
+	archives file: file("target/jreadline-em-0.20.4.jar"), name: "jreadline-em", type: 'jar'
+}
+
+uploadArchives {
+    repositories {
+		
+		mavenDeployer {
+       		snapshotRepository(url: 'http://eidos01maven:8080/nexus/content/repositories/snapshots') {
+       			authentication(userName: 'eidosdeploy', password: 'deployer')
+       		}
+			
+      		repository(url: 'http://eidos01maven:8080/nexus/content/repositories/releases') {
+       			authentication(userName: 'eidosdeploy', password: 'deployer')
+      		}
+	
+			
+			def myPom = addFilter("jreadline-em") { artifact, file -> 
+				artifact.name=="jreadline-em"
+			}
+			
+			myPom.artifactId = 'jreadline-em'
+			myPom.groupId = 'com.eidosmedia'
+			myPom.version = project.version
+			myPom.packaging = 'jar'
+       }
+	}
+}
+
+/*repositories {
+    mavenCentral()
+}*/
+
+dependencies {
+    compile group: 'org.fusesource.jansi', name: 'jansi', version: '1.8'
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+
+mainClassName = "Example"
+
+idea {
+    project {
+        jdkName = "1.6"
+        ipr {
+            withXml { provider ->
+                provider.node.component.find { it.@name == 'VcsDirectoryMappings' }.mapping.@vcs = 'Git'
+                def maxHeapSizeConfig =  provider.node.component.find { it.@name == 'JavacSettings' }
+                if( maxHeapSizeConfig == null ){
+                    def javacSettingsNode =  provider.node.appendNode('component',[name: 'JavacSettings'])
+                    javacSettingsNode.appendNode('option', [name:"MAXIMUM_HEAP_SIZE", value:"512"])
+                }
+            }
+            beforeMerged { project ->
+                project.modulePaths.clear()
+            }
+        }
+    }
+    module {
+        name = "jreadline"
+    }
+}
+
